@@ -3,7 +3,7 @@
 const float Ship::SPEED = 0.1f;
 
 Ship::Ship()
-	: Sprite("ship.jpg")
+	: Sprite("ship.jpg", 0, 0, 400, 400)
 	, currentX(0)
 	, currentY(0)
 	, currentTime(0)

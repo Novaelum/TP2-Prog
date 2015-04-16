@@ -79,15 +79,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Gimmick.cpp" />
-    <ClCompile Include="GimmickV2.cpp" />
+    <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Libraries.h" />
-    <ClInclude Include="Gimmick.h" />
-    <ClInclude Include="GimmickV2.h" />
+    <ClInclude Include="OpeningScene.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>

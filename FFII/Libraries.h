@@ -4,4 +4,5 @@
 #include "Text.h"
 #include "Audio.h"
 #include "TextAnim.h"
-#include "Gimmick.h"
+#include "Ship.h"
+#include "OpeningScene.h"
