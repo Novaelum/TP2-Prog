@@ -79,13 +79,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="CharacterCreation.cpp" />
     <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CharacterCreation.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="OpeningScene.h" />
+    <ClInclude Include="ResourcesIDs.h" />
     <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>

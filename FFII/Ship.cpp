@@ -1,5 +1,5 @@
 #include "Ship.h"
-
+/*
 const float Ship::SPEED = 0.1f;
 
 Ship::Ship()
@@ -27,10 +27,10 @@ void Ship::Update()
 		// Opération time Base
 		currentX += SPEED * dt;
 		currentY += SPEED * dt;
-		SetPosition(currentX, currentY);
 	}
 }
 
 void Ship::Stop()
 {
 }
+*/

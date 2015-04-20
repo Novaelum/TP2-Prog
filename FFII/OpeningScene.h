@@ -13,6 +13,6 @@ public:
 
 private:
 	Sprite* background;
-	TextAnim* dialog;
+	Text* openingline;
 };
 
