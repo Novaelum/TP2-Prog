@@ -12,7 +12,11 @@ public:
 	virtual void Update();
 
 private:
+	float timer;
+	bool activated;
 	Sprite* background;
+	Sprite* cursor;
 	Text* openingline;
+	Text* choice[2];
 };
 
