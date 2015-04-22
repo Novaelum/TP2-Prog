@@ -24,6 +24,7 @@ You can use this page to store shortcut for your filepaths
 // Sounds
 // s_ for sounds
 #define s_cursor_m "sounds/cursor_move.wav"
+#define s_cursor_e "sounds/cursor_error.wav"
 
 // Musics
 // m_ for musics

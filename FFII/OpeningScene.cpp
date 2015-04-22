@@ -13,7 +13,7 @@ OpeningScene::OpeningScene()
 	cursor->ToggleVisibility();
 	cursor->SetPosition(280, 415);
 	for (int i = 0; i < 2; i++) {
-		int y = 415 + i * 30;
+		int y = 415 + i * OpSc_LINE_SPACING;
 		choice[i] = new Text("", f_finalfantasy, 22, point<int>(350, y), 0, Color::BLACK, OpNone);
 	}
 }
@@ -28,27 +28,38 @@ OpeningScene::~OpeningScene() {
 
 void OpeningScene::Update() {
 	if (!activated) {
-		if (ThisKeyReleased(SDL_SCANCODE_RETURN)) {
+		if ((ThisKeyReleased(SDL_SCANCODE_RETURN)) || (ThisKeyPressed(SDL_SCANCODE_Z))) {
+			cAudio->PlaySound(s_cursor_m);
 			activated = true;
 			openingline->SetText("");
 			cursor->ToggleVisibility();
 			choice[0]->SetText("NEW GAME");
-			if (true) // TODO: Add variable checking if a game has been saved
-				choice[1]->SetText("LOAD GAME");
+			choice[1]->SetText("LOAD GAME");
 		}
 	}
 	else {
 		timer += DTime;
+		if (ThisKeyPressed(SDL_SCANCODE_Z)) {
+			if (flipper) {
+				printf("new game");
+			}
+			else {
+				if (true) // TODO: Add variable checking if a game has been saved
+					cAudio->PlaySound(s_cursor_e);
+					printf("Load game");
+			}
+		}
 		if (ThisKeyPressed(SDL_SCANCODE_UP) || ThisKeyHeld(SDL_SCANCODE_UP)) {
 			if (timer >= 0.08f) {
 				timer = 0;
 				cAudio->PlaySound(s_cursor_m);
 				if (!choice[1]->TextNotSet()) {
+					flipper = !flipper;
 					if (cursor->GetPosition().y == choice[0]->GetPosition().y) {
-						cursor->MoveBy(0, 30);
+						cursor->MoveBy(0, OpSc_LINE_SPACING);
 					}
 					else {
-						cursor->MoveBy(0, -30);
+						cursor->MoveBy(0, -OpSc_LINE_SPACING);
 					}
 				}
 			}
@@ -58,11 +69,12 @@ void OpeningScene::Update() {
 				timer = 0;
 				cAudio->PlaySound(s_cursor_m);
 				if (!choice[1]->TextNotSet()) {
+					flipper = !flipper;
 					if (cursor->GetPosition().y == choice[1]->GetPosition().y) {
-						cursor->MoveBy(0, -30);
+						cursor->MoveBy(0, -OpSc_LINE_SPACING);
 					}
 					else {
-						cursor->MoveBy(0, 30);
+						cursor->MoveBy(0, OpSc_LINE_SPACING);
 					}
 				}
 			}

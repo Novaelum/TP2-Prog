@@ -2,6 +2,8 @@
 #include "Libraries.h"
 #include "Common.h"
 
+#define OpSc_LINE_SPACING 30
+
 class OpeningScene:
 	public Component
 {
@@ -14,6 +16,7 @@ public:
 private:
 	float timer;
 	bool activated;
+	bool flipper = true;
 	Sprite* background;
 	Sprite* cursor;
 	Text* openingline;
