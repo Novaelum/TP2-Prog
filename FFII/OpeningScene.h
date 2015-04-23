@@ -1,6 +1,6 @@
 #pragma once
-#include "Libraries.h"
-#include "Common.h"
+#include "Sprite.h"
+#include "Text.h"
 
 #define OpSc_LINE_SPACING 30
 
@@ -12,6 +12,7 @@ public:
 	~OpeningScene();
 
 	virtual void Update();
+	virtual void Kill();
 
 private:
 	float timer;

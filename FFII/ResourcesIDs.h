@@ -8,23 +8,23 @@ You can use this page to store shortcut for your filepaths
 ===========================
 **/
 
-// Example
-
 // Textures
 // t_ for texture
-#define t_openingscreen "images/openingscreen.jpg"
-#define t_cursor "images/cursor.png"
+#define t_openingscreen		"images/openingscreen.jpg"
+#define t_cursor			"images/cursor.png"
+#define t_characters		"images/characters.png"
+#define t_menubg            "images/menu_bg.png"
 
 // Fonts
 // f_ for fonts
-#define f_dialog "fonts/dialog.ttf"
-#define f_finalfantasy "fonts/Final-Fantasy.ttf"
-#define f_mainfont "fonts/mainfont.ttf"
+#define f_dialog			"fonts/dialog.ttf"
+#define f_finalfantasy		"fonts/Final-Fantasy.ttf"
+#define f_mainfont			"fonts/mainfont.ttf"
 
 // Sounds
 // s_ for sounds
-#define s_cursor_m "sounds/cursor_move.wav"
-#define s_cursor_e "sounds/cursor_error.wav"
+#define s_cursor_m			"sounds/cursor_move.wav"
+#define s_cursor_e			"sounds/cursor_error.wav"
 
 // Musics
 // m_ for musics

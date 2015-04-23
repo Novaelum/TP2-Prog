@@ -6,10 +6,11 @@ OpeningScene::OpeningScene()
 	: activated(false)
 	, timer(0) {
 	background = new Sprite("images/openingscreen.jpg");
+	cursor = hand_cursor;
+	cEngine->MoveBack(cursor);
 	cAudio->PlayMusic("musics/openingtheme.mp3");
 	cAudio->SetMusicVolume(40);
 	openingline = new Text("Push enter to begin", f_mainfont, 18, point<int>(300, 415), 0, Color::BLACK, OpFadeIn);
-	cursor = new Sprite(t_cursor);
 	cursor->ToggleVisibility();
 	cursor->SetPosition(280, 415);
 	for (int i = 0; i < 2; i++) {
@@ -19,11 +20,6 @@ OpeningScene::OpeningScene()
 }
 
 OpeningScene::~OpeningScene() {
-	delete background;
-	delete openingline;
-	for (int i = 0; i < 2; i++) {
-		delete choice[i];
-	}
 }
 
 void OpeningScene::Update() {
@@ -33,20 +29,28 @@ void OpeningScene::Update() {
 			activated = true;
 			openingline->SetText("");
 			cursor->ToggleVisibility();
-			choice[0]->SetText("NEW GAME");
-			choice[1]->SetText("LOAD GAME");
+			choice[0]->SetText("New Game");
+			choice[1]->SetText("Load Game");
 		}
 	}
 	else {
 		timer += DTime;
-		if (ThisKeyPressed(SDL_SCANCODE_Z)) {
+		if ((ThisKeyReleased(SDL_SCANCODE_RETURN)) || (ThisKeyPressed(SDL_SCANCODE_Z))) {
 			if (flipper) {
-				printf("new game");
+				cAudio->PlaySound(s_cursor_m);
+				cEngine->DeleteComponent(this);
+				cEngine->DeleteComponent(background);
+				cEngine->DeleteComponent(choice[0]);
+				cEngine->DeleteComponent(choice[1]);
+				cursor->ToggleVisibility();
+				new CharacterCreation();
+				return;
 			}
 			else {
-				if (true) // TODO: Add variable checking if a game has been saved
+				if (false) // TODO: Add variable checking if a game has been saved
+					printf("Load game"); // TODO: Load the actual save
+				else
 					cAudio->PlaySound(s_cursor_e);
-					printf("Load game");
 			}
 		}
 		if (ThisKeyPressed(SDL_SCANCODE_UP) || ThisKeyHeld(SDL_SCANCODE_UP)) {
@@ -80,4 +84,8 @@ void OpeningScene::Update() {
 			}
 		}
 	}
+}
+
+void OpeningScene::Kill() {
+	delete this;
 }
