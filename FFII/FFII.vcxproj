@@ -79,21 +79,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BattleScene.cpp" />
     <ClCompile Include="CharacterCreation.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="OpeningScene.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="Ship.cpp" />
     <ClCompile Include="Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BattleScene.h" />
     <ClInclude Include="CharacterCreation.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="OpeningScene.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="ResourcesIDs.h" />
-    <ClInclude Include="Ship.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\bart-sdl-engine-h15\src\Core\Core.vcxproj">

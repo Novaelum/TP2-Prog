@@ -5,8 +5,8 @@
 #include "Sprite.h"
 #include "Text.h"
 #include "Audio.h"
-#include "Ship.h"
 #include "Player.h"
+#include "BattleScene.h"
 #include "ResourcesIDs.h"
 
 
