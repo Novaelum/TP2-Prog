@@ -20,14 +20,14 @@ BattleScene::BattleScene()
 	choicesBg->SetPosition(150, 450);
 
 	for (int i = 0; i < 4; ++i) {
-		enemies[i] = new Sprite(t_bestiary, point<int>(290, 680), point<int>(42, 42));
-		enemies[i]->Scale(3.75f);
+		enemies[i].sprite = new Sprite(t_bestiary, point<int>(290, 680), point<int>(42, 42));
+		enemies[i].sprite->Scale(3.75f);
 	}
 
-	enemies[0]->SetPosition(100, 100);
-	enemies[1]->SetPosition(225, 100);
-	enemies[2]->SetPosition(100, 225);
-	enemies[3]->SetPosition(225, 225);
+	enemies[0].sprite->SetPosition(100, 100);
+	enemies[1].sprite->SetPosition(225, 100);
+	enemies[2].sprite->SetPosition(100, 225);
+	enemies[3].sprite->SetPosition(225, 225);
 
 	enemiesNames = new Text("Black Knight   4", f_ffta_55);
 	enemiesNames->SetPosition(15, 445);
@@ -63,6 +63,8 @@ BattleScene::BattleScene()
 
 	party[0].charSheet->SetPosition(630, 150);
 	party[0].action = CA_MovingForward;
+
+	damageFeedback = new Text("", f_ffta_55);
 
 	for (int i = 0; i < currentPlayer->GetPartySize(); ++i) {
 		int y = 445 + i * 30;
@@ -104,7 +106,7 @@ void BattleScene::Update() {
 			case(0) :
 				cAudio->PlaySound(s_cursor_m);
 				battleMode = BM_Targetting;
-				cursor->SetPosition(enemies[target]->GetPosition().x + enemies[target]->GetSize().x, enemies[target]->GetPosition().y + enemies[target]->GetSize().y / 2);
+				cursor->SetPosition(enemies[target].sprite->GetPosition().x + enemies[target].sprite->GetSize().x, enemies[target].sprite->GetPosition().y + enemies[target].sprite->GetSize().y / 2);
 				cursor->Flip(flip_h);
 				break;
 				// Magic
@@ -168,7 +170,7 @@ void BattleScene::Update() {
 				target -= 2;
 				break;
 			}
-			cursor->SetPosition(enemies[target]->GetPosition().x + enemies[target]->GetSize().x, enemies[target]->GetPosition().y + enemies[target]->GetSize().y / 2);
+			cursor->SetPosition(enemies[target].sprite->GetPosition().x + enemies[target].sprite->GetSize().x, enemies[target].sprite->GetPosition().y + enemies[target].sprite->GetSize().y / 2);
 		}
 		if (ThisKeyPressed(SDL_SCANCODE_RIGHT) || ThisKeyPressed(SDL_SCANCODE_LEFT)) {
 			cAudio->PlaySound(s_cursor_m);
@@ -186,7 +188,7 @@ void BattleScene::Update() {
 				target--;
 				break;
 			}
-			cursor->SetPosition(enemies[target]->GetPosition().x + enemies[target]->GetSize().x, enemies[target]->GetPosition().y + enemies[target]->GetSize().y / 2);
+			cursor->SetPosition(enemies[target].sprite->GetPosition().x + enemies[target].sprite->GetSize().x, enemies[target].sprite->GetPosition().y + enemies[target].sprite->GetSize().y / 2);
 		}
 		if (ThisKeyPressed(SDL_SCANCODE_X)) {
 			cAudio->PlaySound(s_cursor_b);
@@ -371,6 +373,7 @@ void BattleScene::Update() {
 			}
 			break;
 		case(CA_Hit) :
+			currentHP[i]->SetText(std::to_string(currentPlayer->GetParty().at(i)->stats.cHP) + "\/");
 			party[i].currentTime += DTime;
 			if (party[i].currentTime >= 0.8f) {
 				if (currentPlayer->GetParty().at(i)->stats.cHP > 0) {
@@ -395,10 +398,11 @@ void BattleScene::Update() {
 							cEngine->DeleteComponent(currentHP[i]);
 							cEngine->DeleteComponent(maxHP[i]);
 							cEngine->DeleteComponent(currentMP[i]);
+							cEngine->DeleteComponent(damageFeedback);
 						}
 						cursor->SetVisibility(false);
 						for (int j = 0; j < 4; ++j) {
-							cEngine->DeleteComponent(enemies[j]);
+							cEngine->DeleteComponent(enemies[j].sprite);
 						}
 						cEngine->DeleteComponent(this);
 						new Text("Game Over", f_mainfont, point<int>(370, 220), 0, Color::WHITE, OpFadeIn);
@@ -414,6 +418,9 @@ void BattleScene::Update() {
 			if (!party[i].attack->GetIsPlaying()) {
 				party[i].currentTime += DTime;
 				if (party[i].currentTime >= 1.0f / 12) {
+					// Player can only miss in the first fight
+					int atkDamage = 0;
+					AttackEnemy(atkDamage);
 					party[i].isAttacking = false;
 					party[i].charSheet->ToggleVisibility();
 					party[i].attack->ToggleVisibility();
@@ -460,6 +467,26 @@ void  BattleScene::AttackPlayer(int target, int damage) {
 	if (currentPlayer->GetParty().at(target)->stats.cHP < 0) {
 		currentPlayer->GetParty().at(target)->stats.cHP = 0;
 	}
+	if (damage == 0) {
+		damageFeedback->SetText("MISS");
+	}
+	else {
+		damageFeedback->SetText(std::to_string(damage));
+	}
+	damageFeedback->SetPosition(party[target].charSheet->GetPosition().x, party[target].charSheet->GetPosition().y - 45);
+	damageFeedback->SetOptions(OpFadeOut);
+}
+
+void BattleScene::AttackEnemy(int damage) {
+	enemies[party[currentChar].target].health -= damage;
+	if (damage == 0) {
+		damageFeedback->SetText("MISS");
+	}
+	else {
+		damageFeedback->SetText(std::to_string(damage));
+	}
+	damageFeedback->SetPosition(enemies[party[currentChar].target].sprite->GetPosition().x, enemies[party[currentChar].target].sprite->GetPosition().y);
+	damageFeedback->SetOptions(OpFadeOut);
 }
 
 void BattleScene::FlipMode() {

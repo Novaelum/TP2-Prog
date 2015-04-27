@@ -12,6 +12,11 @@ class BattleScene:
 		BM_Acting
 	};
 
+	struct BKnight {
+		Sprite* sprite;
+		int health = 1140;
+	};
+
 
 public:
 	BattleScene();
@@ -26,9 +31,11 @@ private:
 	Sprite* bar;
 	Sprite* choicesBg;
 	BattleState party[4];
-	Sprite* enemies[4];
+	BKnight enemies[4];
 	bool enemyAttackDone;
 	bool enemyAttackComplete;
+
+	Text* damageFeedback;
 
 	Text* enemiesNames;
 	Text* choices[4];
@@ -50,6 +57,7 @@ private:
 	void MovingB(int index);
 
 	void AttackPlayer(int target, int damage);
+	void AttackEnemy(int damage);
 
 	void FlipMode();
 

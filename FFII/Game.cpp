@@ -13,4 +13,6 @@ Game::Game()
 
 Game::~Game()
 {
+	delete player;
+	delete cursor;
 }

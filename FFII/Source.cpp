@@ -13,6 +13,6 @@ int main(int argc, char* args[])
 
 	cEngine->Run();
 
-	//delete opening;
+	cGame->Kill();
 	return 0;
 }
